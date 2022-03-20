@@ -73,6 +73,7 @@ const COMMON_EDITORS_LINUX = {
   'webstorm.sh': 'webstorm',
   'goland.sh': 'goland',
   'rider.sh': 'rider',
+  hbuilderx: 'hbuilderx',
 };
 
 const COMMON_EDITORS_WIN = [
@@ -99,6 +100,8 @@ const COMMON_EDITORS_WIN = [
   'goland64.exe',
   'rider.exe',
   'rider64.exe',
+  'HBuilderX.exe',
+  'HBuilder.exe',
 ];
 
 // Transpiled version of: /^([A-Za-z]:[/\\])?[\p{L}0-9/.\-_\\]+$/u
@@ -153,6 +156,8 @@ function getArgumentsForLineNumber(
     case 'Code - Insiders':
     case 'vscodium':
     case 'VSCodium':
+    case 'HBuilderX':
+    case 'HBuilder':
       return addWorkspaceToArgumentsIfExists(
         ['-g', fileName + ':' + lineNumber + ':' + colNumber],
         workspace
@@ -214,6 +219,7 @@ function guessEditor() {
         )
         .toString();
       const runningProcesses = output.split('\r\n');
+
       for (let i = 0; i < runningProcesses.length; i++) {
         const processPath = runningProcesses[i].trim();
         const processName = path.basename(processPath);
@@ -230,8 +236,9 @@ function guessEditor() {
         .toString();
       const processNames = Object.keys(COMMON_EDITORS_LINUX);
       for (let i = 0; i < processNames.length; i++) {
-        const processName = processNames[i];
+        // const processName = processNames[i];
         if (output.indexOf(processName) !== -1) {
+          console.log(22222);
           return [COMMON_EDITORS_LINUX[processName]];
         }
       }
