@@ -20,7 +20,7 @@ hero:
       link: /more/feedback
     - theme: alt
       text: 在线体验(React)
-      link: https://stackblitz.com/edit/vitejs-vite-4pseos?file=vite.config.ts
+      link: https://stackblitz.com/edit/vitejs-vite-svtwrr?file=vite.config.ts
     - theme: alt
       text: 在线体验(Vue)
       link: https://stackblitz.com/edit/vitejs-vite-4pseos?file=vite.config.ts
