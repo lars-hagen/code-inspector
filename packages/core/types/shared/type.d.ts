@@ -8,6 +8,8 @@ export type RecordInfo = {
     port: number;
     entry: string;
     output: string;
+    root: string;
+    base: string;
     findPort?: Promise<number>;
 };
 export type IDEOpenMethod = 'reuse' | 'new' | 'auto';

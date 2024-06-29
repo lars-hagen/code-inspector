@@ -18,6 +18,6 @@
     "useDefineForClassFields": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/server/scripts/enhance-trace.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

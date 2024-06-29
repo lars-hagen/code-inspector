@@ -24,6 +24,7 @@ export default defineConfig({
         'portfinder',
         'child_process',
         '@vue/compiler-dom',
+        'source-map',
       ],
     },
     target: ['node8', 'es2015'],

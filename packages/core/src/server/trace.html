@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>code-inspector-plugin Trace</title>
+  </head>
+  <body></body>
+  <script type="text/javascript">
+    const segments = location.pathname.split('/');
+    const uniqueKey = segments[segments.length - 2];
+
+    const params = new URLSearchParams(location.search);
+    const line = params.get('r');
+    const column = params.get('c');
+
+    const url = `/trace-source?uniqueKey=${uniqueKey}&line=${line}&column=${column}`;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.send();
+    xhr.addEventListener('error', () => {
+      window.close();
+    });
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        window.close();
+      }
+    };
+  </script>
+</html>

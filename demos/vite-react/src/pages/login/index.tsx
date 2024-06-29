@@ -122,6 +122,11 @@ function UserName(formItemProps: FormItemProps) {
 
 function Password(formItemProps: FormItemProps) {
   const [isLock, setLock] = useState(false);
+
+  function sLock() {
+    console.trace();
+    setLock((preState) => !preState);
+  }
   return (
     <LoginFormItem
       {...formItemProps}
@@ -135,7 +140,7 @@ function Password(formItemProps: FormItemProps) {
         isLock ? Icon.EyeOutlined : Icon.EyeInvisibleOutlined,
         {
           className: classnames(styles.form_item_icon, styles.suffix),
-          onClick: () => setLock((preState) => !preState)
+          onClick: sLock
         }
       )}
     >

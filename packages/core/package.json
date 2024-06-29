@@ -42,15 +42,18 @@
     "build:server": "vite build",
     "build:client": " vite build --config ./vite.client.config.ts",
     "build:client:watch": " vite build --config ./vite.client.config.ts --watch",
+    "cpx:html": "cpx ./src/server/trace.html ./dist",
+    "cpx:scripts": "cpx ./src/server/scripts/*.js ./dist",
     "clear": "rimraf ./dist && rimraf ./types",
-    "build": "pnpm clear && tsc && pnpm build:server && pnpm build:client",
+    "build": "pnpm clear && tsc && pnpm build:server && pnpm build:client && pnpm cpx:html && pnpm cpx:scripts",
     "pub": "pnpm publish",
     "pub:beta": "pnpm publish --tag beta"
   },
   "dependencies": {
     "@vue/compiler-dom": "^3.2.47",
     "chalk": "^4.1.1",
-    "portfinder": "^1.0.28"
+    "portfinder": "^1.0.28",
+    "source-map": "^0.7.4"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",
@@ -60,6 +63,7 @@
     "@types/node": "^18.14.1",
     "@vue/babel-plugin-jsx": "^1.1.1",
     "@vue/compiler-sfc": "^3.3.4",
+    "cpx": "^1.5.0",
     "dotenv": "^16.1.4",
     "lit": "^2.6.1",
     "magic-string": "^0.30.0",

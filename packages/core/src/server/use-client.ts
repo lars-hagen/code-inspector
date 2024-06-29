@@ -10,9 +10,9 @@ import {
   AstroToolbarFile,
   getIP,
 } from '../shared';
+import { getEnhancedTraceCode } from './scripts';
 
 let compatibleDirname = '';
-
 if (typeof __dirname !== 'undefined') {
   compatibleDirname = __dirname;
 } else {
@@ -23,13 +23,14 @@ if (typeof __dirname !== 'undefined') {
 export const clientJsPath = path.resolve(compatibleDirname, './client.umd.js');
 const jsClientCode = fs.readFileSync(clientJsPath, 'utf-8');
 
-export function getInjectedCode(options: CodeOptions, port: number) {
+export function getInjectedCode(options: CodeOptions, record: RecordInfo) {
   let code = `'use client';`;
   code += getEliminateWarningCode();
   if (options?.hideDomPathAttr) {
     code += getHidePathAttrCode();
   }
-  code += getWebComponentCode(options, port);
+  code += getWebComponentCode(options, record.port);
+  code += getEnhancedTraceCode(options, record.port, record.base);
   return `/* eslint-disable */\n` + code.replace(/\n/g, '');
 }
 
@@ -147,7 +148,7 @@ export async function getCodeWithWebComponent(
     (isJsTypeFile(file) && getFilePathWithoutExt(file) === record.entry) ||
     file === AstroToolbarFile
   ) {
-    const injectCode = getInjectedCode(options, record.port);
+    const injectCode = getInjectedCode(options, record);
     if (options.importClient === 'code') {
         code = `${injectCode};${code}`;
     } else {

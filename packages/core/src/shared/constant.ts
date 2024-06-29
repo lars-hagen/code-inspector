@@ -10,3 +10,8 @@ export const FormatColumn = "{column}";
 export const DefaultPathFormat = `${FormatFile}:${FormatLine}:${FormatColumn}`;
 
 export const AstroToolbarFile = '\0astro:dev-toolbar'
+
+export const InpsectorURL = '/';
+export const TraceHtmlURL = '/t/';
+export const TraceSourceURL = '/trace-source';
+export const TraceDataURL = '/trace-data';

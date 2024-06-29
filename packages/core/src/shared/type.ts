@@ -16,6 +16,8 @@ export type RecordInfo = {
   port: number;
   entry: string;
   output: string; // web component 文件要写入的目录
+  root: string; // 项目根目录
+  base: string; // 项目 baseUrl
   findPort?: Promise<number>;
 };
 export type IDEOpenMethod = 'reuse' | 'new' | 'auto';

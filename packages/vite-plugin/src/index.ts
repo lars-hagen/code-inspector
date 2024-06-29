@@ -20,6 +20,8 @@ export function ViteCodeInspectorPlugin(options: Options) {
     port: 0,
     entry: '',
     output: options.output,
+    root: '',
+    base: '',
   };
   return {
     name: PluginName,
@@ -40,6 +42,11 @@ export function ViteCodeInspectorPlugin(options: Options) {
       } else {
         return !!isDev || command === 'serve';
       }
+    },
+    configResolved(config) {
+      // 获取项目的根目录并存储
+      record.root = config.root;
+      record.base = config.base;
     },
     async transform(code, id) {
       if (id.match('node_modules')) {

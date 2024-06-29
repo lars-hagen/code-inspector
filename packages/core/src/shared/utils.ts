@@ -1,5 +1,6 @@
 import path from 'path';
 import os from 'os';
+import http from 'http';
 import { FormatColumn, FormatFile, FormatLine, JsFileExtList } from './constant';
 import { EscapeTags } from './type';
 
@@ -92,4 +93,36 @@ export function isEscapeTags(escapeTags: EscapeTags, tag: string) {
       return escapeTag.test(tag) || escapeTag.test(tag.toLowerCase());
     }
   }) 
+}
+
+export async function fetchFile(url: string) {
+  return await new Promise((resolve, reject) => {
+    http.get(url, (res) => {
+      let data = '';
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        try {
+          resolve(data);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }).on('error', (error) => {
+      reject(error);
+    });
+  })
+}
+
+export function respondMessage(res: http.ServerResponse, msg: string, appendHeaders?: Record<string, string>) {
+  res.writeHead(200, {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': '*',
+    'Access-Control-Allow-Headers': '*',
+    'Access-Control-Allow-Private-Network': 'true',
+    ...(appendHeaders || {}),
+  });
+  res.end(msg);
 }

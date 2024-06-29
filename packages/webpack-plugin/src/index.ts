@@ -106,6 +106,8 @@ class WebpackCodeInspectorPlugin {
       port: 0,
       entry: '',
       output: this.options.output,
+      root: compiler?.options?.context,
+      base: compiler?.options?.output?.publicPath,
     }
     
     applyLoader({ ...this.options, record }, compiler);

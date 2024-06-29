@@ -9,3 +9,7 @@ export declare const FormatLine = "{line}";
 export declare const FormatColumn = "{column}";
 export declare const DefaultPathFormat: string;
 export declare const AstroToolbarFile = "\0astro:dev-toolbar";
+export declare const InpsectorURL = "/";
+export declare const TraceHtmlURL = "/t/";
+export declare const TraceSourceURL = "/trace-source";
+export declare const TraceDataURL = "/trace-data";
