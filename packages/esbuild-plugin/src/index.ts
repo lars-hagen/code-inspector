@@ -39,6 +39,8 @@ export function EsbuildCodeInspectorPlugin(options: Options) {
         port: 0,
         entry: '',
         output: options.output,
+        root: '',
+        base: '',
       };
       const { escapeTags = [] } = options;
       const cache = new Map<
