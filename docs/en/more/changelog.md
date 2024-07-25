@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.15.2
+
+- 【chore】Optimized console messages [#199](https://github.com/zh-lx/code-inspector/pull/199)
+
+## 0.15.1
+
+- 【fix】Fixed the issue where it occasionally did not work after compilation in Next.js [#198](https://github.com/zh-lx/code-inspector/pull/198)
+
+## 0.15.0
+
+- 【fix】Fixed the issue where code location could not be accurately pinpointed to the line/column when specifying the full path of the IDE [#191](https://github.com/zh-lx/code-inspector/pull/191), [#193](https://github.com/zh-lx/code-inspector/pull/193)
+- 【feat】Added support for use in esbuild [#189](https://github.com/zh-lx/code-inspector/pull/189)
+
 ## 0.14.2
 
 - 【fix】Fixed the issue where interaction code was being injected into multiple files repeatedly.

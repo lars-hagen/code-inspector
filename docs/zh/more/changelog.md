@@ -1,5 +1,18 @@
 # 更新日志
 
+## 0.15.2
+
+- 【chore】优化控制台提示 [#199](https://github.com/zh-lx/code-inspector/pull/199)
+
+## 0.15.1
+
+- 【fix】修复 Next.js 中编译后偶尔不生效的问题 [#198](https://github.com/zh-lx/code-inspector/pull/198)
+
+## 0.15.0
+
+- 【fix】修复指定 IDE 完整路径时代码定位无法精确到行/列的问题 [#191](https://github.com/zh-lx/code-inspector/pull/191)、[#193](https://github.com/zh-lx/code-inspector/pull/193)
+- 【feat】支持在 esbuild 中使用 [#189](https://github.com/zh-lx/code-inspector/pull/189)
+
 ## 0.14.2
 
 - 【fix】修复了交互代码会重复注入到多个文件中的问题

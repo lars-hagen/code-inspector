@@ -1,6 +1,6 @@
 # Get Started
 
-`code-inspector-plugin` supports usage in projects using `webpack/vite/rspack/nextjs/nuxt/umijs` as bundlers and works with frameworks such as `vue/react/preact/solid/qwik/svelte/astro`. Please refer to the integration tutorial below.
+`code-inspector-plugin` supports usage in projects using `webpack/vite/rspack/rsbuild/esbuild/farm/nextjs/nuxt/umijs` as bundlers and works with frameworks such as `vue/react/preact/solid/qwik/svelte/astro`. Please refer to the integration tutorial below.
 
 ## Installation
 
@@ -98,6 +98,42 @@ export default defineConfig({
       ],
     },
   },
+});
+```
+
+:::
+
+::: details Click to expand configuration about: esbuild
+
+```js
+// esbuild.config.js
+const esbuild = require('esbuild');
+const { codeInspectorPlugin } = require('code-inspector-plugin');
+
+esbuild.build({
+  // other configs...
+
+  // [Note] When used in esbuild, the return value of the dev function needs to be determined by the environment. Local development environments return true, while online packaging returns false
+  plugins: [codeInspectorPlugin({ bundler: 'esbuild', dev: () => true })],
+});
+```
+
+:::
+
+::: details Click to expand configuration about: farm
+
+```js
+// farm.config.js
+import { defineConfig } from '@farmfe/core';
+import { codeInspectorPlugin } from 'code-inspector-plugin';
+
+export default defineConfig({
+  vitePlugins: [
+    codeInspectorPlugin({
+      bundler: 'vite',
+    }),
+    // ...other code
+  ],
 });
 ```
 
