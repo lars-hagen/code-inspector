@@ -131,7 +131,18 @@ export async function traceHttpFile(
     sourceInfo.column++;
   }
 
-  const sourceFile = path.resolve(absolutePath, '../', sourceInfo.source as string);
+  let sourceFile = '';
+  if (sourceInfo.source && sourceInfo.source.startsWith('webpack:///')) {
+    const systemRoot = record.root.split('/')[1] || '';
+    if (sourceInfo.source.startsWith(`webpack:///${systemRoot}/`)) {
+      sourceFile = sourceInfo.source.replace('webpack://', '');
+    } else {
+      sourceFile = sourceInfo.source.replace('webpack://', record.root);
+    }
+  } else {
+    sourceFile = path.resolve(absolutePath, '../', sourceInfo.source as string);
+  }
+
   launchEditor(sourceFile, sourceInfo.line, sourceInfo.column, options?.editor, options?.openIn, options?.pathFormat);
 }
 
