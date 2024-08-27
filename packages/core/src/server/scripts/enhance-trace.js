@@ -12,7 +12,7 @@ function (ip, port, base){
   console.trace = function(...args) {
     const error = new Error();
     /* 过滤掉[错误]和[当前这个函数]的调用栈 */
-    const stack = error.stack?.split?.('\n')?.slice?.(2) || [];
+    const stack = error && error.stack && error.stack.split('\n').slice(2) || [];
 
     console.group(...args);
     stack.forEach(item => {
@@ -26,7 +26,7 @@ function (ip, port, base){
       let message = messageMatches[0] || '';
 
       /* 本地服务文件路径 */
-      let filePath = item.slice(message?.length);
+      let filePath = item.slice(message.length);
       /* 文件路径可能被 () 包裹，去掉包裹 */
       if (filePath.startsWith('(')) {
         filePath = filePath.slice(1);
@@ -70,7 +70,7 @@ function (ip, port, base){
         })
       }
 
-      const traceFile = `http://${ip}:${port}/t/${uniqueKey}/${fileName}?r=${line ?? ''}&c=${column ?? ''}`;
+      const traceFile = `http://${ip}:${port}/t/${uniqueKey}/${fileName}?r=${line == undefined ? '' : line}&c=${column == undefined ? '' : column}`;
       console.log(message + traceFile);
     });
     console.groupEnd();
