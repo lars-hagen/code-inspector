@@ -10,3 +10,4 @@ export declare function formatOpenPath(file: string, line: string, column: strin
 export declare function isEscapeTags(escapeTags: EscapeTags, tag: string): boolean;
 export declare function fetchFile(url: string): Promise<unknown>;
 export declare function respondMessage(res: http.ServerResponse, msg: string, appendHeaders?: Record<string, string>): void;
+export declare function getDenpendencies(): string[];

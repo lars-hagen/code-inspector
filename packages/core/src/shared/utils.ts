@@ -1,6 +1,7 @@
 import path from 'path';
 import os from 'os';
 import http from 'http';
+import fs from 'fs';
 import { FormatColumn, FormatFile, FormatLine, JsFileExtList } from './constant';
 import { EscapeTags } from './type';
 
@@ -125,4 +126,18 @@ export function respondMessage(res: http.ServerResponse, msg: string, appendHead
     ...(appendHeaders || {}),
   });
   res.end(msg);
+}
+
+export function getDenpendencies() {
+  const packageJsonPath = path.resolve(process.cwd(), './package.json');
+  if (fs.existsSync(packageJsonPath)) {
+      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8') || '{}');
+      const dependencies = {
+        ...packageJson.dependencies,
+        ...packageJson.devDependencies,
+        ...packageJson.peerDependencies
+      }
+      return Array.from(new Set(Object.keys(dependencies)));
+  }
+  return [];
 }
