@@ -11,7 +11,7 @@ import {
   getIP,
   getDenpendencies,
 } from '../shared';
-import { getEnhancedTraceCode } from './scripts';
+// import { getEnhancedTraceCode } from './scripts';
 
 let compatibleDirname = '';
 if (typeof __dirname !== 'undefined') {
@@ -31,7 +31,7 @@ export function getInjectedCode(options: CodeOptions, record: RecordInfo) {
     code += getHidePathAttrCode();
   }
   code += getWebComponentCode(options, record.port);
-  code += getEnhancedTraceCode(options, record.port, record.base);
+  // code += getEnhancedTraceCode(options, record.port, record.base);
   return `/* eslint-disable */\n` + code.replace(/\n/g, '');
 }
 

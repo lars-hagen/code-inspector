@@ -8,7 +8,7 @@ export default defineConfig({
       entry: ['src/client/index.ts'],
       formats: ['umd'],
       fileName: 'client',
-      name: 'vueInspectorClient',
+      name: 'codeInspectorClient',
     },
     minify: true,
     emptyOutDir: false,

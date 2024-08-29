@@ -2,9 +2,9 @@
 import http from 'http';
 import portFinder from 'portfinder';
 import launchEditor from './launch-editor';
-import { DefaultPort, TraceDataURL, TraceHtmlURL, TraceSourceURL } from '../shared/constant';
+import { DefaultPort, TraceDataURL, TraceHtmlURL, TraceSourceURL, TransformToSourceStack } from '../shared/constant';
 import { type CodeOptions, type RecordInfo } from '../shared';
-import { respondTrace, storeTraceData, traceSourceCode } from './trace';
+import { respondTrace, storeTraceData, traceSourceCode, transformToSourceStack } from './trace';
 
 function openEditor(req: http.IncomingMessage, res: http.ServerResponse, options?: CodeOptions) {
    // 收到请求唤醒vscode
@@ -27,12 +27,15 @@ function openEditor(req: http.IncomingMessage, res: http.ServerResponse, options
 
 export function createServer(callback: (port: number) => void, options: CodeOptions, record: RecordInfo) {
   const server = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
+    console.log(req.url);
     if (req.url?.startsWith(TraceHtmlURL)) {
       respondTrace(req, res);
     } else if (req.url?.startsWith(TraceDataURL)) {
       storeTraceData(req, res, record);
     } else if (req.url?.startsWith(TraceSourceURL)) {
       traceSourceCode(req, res, record, options);
+    } else if (req.url === TransformToSourceStack) {
+      transformToSourceStack(req, res, record, options);
     } else if (req.url === '/favicon.ico') {
       return;
     } else {

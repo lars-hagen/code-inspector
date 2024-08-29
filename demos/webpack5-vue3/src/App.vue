@@ -11,9 +11,22 @@ import { ref, watch } from 'vue';
 
 const count = ref(0);
 
+function getStackTrace() {
+  const obj = {};
+  Error.captureStackTrace(obj, getStackTrace);
+  fetch('https://baidu.com');
+  return obj.stack;
+}
+
+function exampleFunction() {
+  const stackTrace = getStackTrace();
+  console.log(stackTrace);
+}
+
 watch(
   () => count.value,
   () => {
+    exampleFunction();
     console.trace();
   }
 );

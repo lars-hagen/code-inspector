@@ -1,22 +1,25 @@
-function (ip, port, base){
-  if (typeof window === 'undefined' || globalThis.__code_inspector_trace) {
+export function enhanceTrace(ip: string, port: number){
+  if (typeof window === 'undefined' || window.__code_inspector_trace) {
     return;
   };
-  globalThis.__code_inspector_trace = true;
+  window.__code_inspector_trace = true;
 
-  /* 记录原始的 console 能力 */
+  // 记录原始的 console 能力
   if (!window.__code_inspector_console) {
     window.__code_inspector_console = {};
   }
 
   console.trace = async function(...args) {
-    const consoleQueue = [];
-    const originConsole = {};
-    /* 代理 console 能力，将 console 事件收集进队列，等待当前的异步 console.group 完成后再执行 */
+    const consoleQueue: { key: string, args: any[] }[] = [];
+    // 代理 console 能力，将 console 事件收集进队列，等待当前的异步 console.group 完成后再执行 */
     Object.keys(console).forEach(key => {
       if (key !== 'trace') {
-        window.__code_inspector_console[key] = console[key];
-        console[key] = (...args) => {
+        // 记录原始的 console
+        if (!window.__code_inspector_console[key]) {
+          window.__code_inspector_console[key] = console[key as keyof typeof console];
+        }
+        // @ts-ignore
+        console[key] = (...args: any[]) => {
           consoleQueue.push({
             key,
             args
@@ -26,9 +29,9 @@ function (ip, port, base){
     });
 
     const error = new Error();
-    /* 过滤掉[错误]和[当前这个函数]的调用栈 */
+    // 过滤掉[错误]和[当前这个函数]的调用栈
     const stack = error && error.stack && error.stack.split('\n').slice(2) || [];
-    /* 处理 stack 获取编译后的 list */
+    // 处理 stack 获取编译后的 list
     const compiledList = stack.map(item => {
       item = item.trimStart();
 
@@ -75,6 +78,8 @@ function (ip, port, base){
       return { file, line, column, message };
     });
 
+    let sourceList = [];
+
     await new Promise(res => {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", `http://${ip}:${port}/trace/transform-to-source`, true);
@@ -83,7 +88,7 @@ function (ip, port, base){
       xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
+            sourceList = JSON.parse(xhr.responseText);
             res(1); 
           } else {
             res(1);
@@ -95,16 +100,17 @@ function (ip, port, base){
     /* 恢复 console 能力 */
     Object.keys(console).forEach(key => {
       if (key !== 'trace') {
-        console[key] = originConsole[key];
+        // @ts-ignore
+        console[key] = window.__code_inspector_console[key];
       }
     });
 
     console.group(...args);
-    
     console.groupEnd();
 
     /* 执行队列事件 */
     consoleQueue.forEach(item => {
+      // @ts-ignore
       console[item.key](...item.args);
     });
   };

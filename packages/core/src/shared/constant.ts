@@ -15,3 +15,4 @@ export const InpsectorURL = '/';
 export const TraceHtmlURL = '/t/';
 export const TraceSourceURL = '/trace-source';
 export const TraceDataURL = '/trace-data';
+export const TransformToSourceStack = '/trace/transform-to-source';

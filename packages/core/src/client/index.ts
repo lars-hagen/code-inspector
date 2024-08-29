@@ -3,6 +3,7 @@ import { property, query, state } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { composedPath } from './util';
 import { PathName, DefaultPort, formatOpenPath } from '../shared';
+import { enhanceTrace } from './trace';
 
 const styleId = '__code-inspector-unique-id';
 
@@ -427,6 +428,7 @@ export class CodeInspectorComponent extends LitElement {
   };
 
   protected firstUpdated(): void {
+    enhanceTrace(this.ip, this.port);
     if (!this.hideConsole) {
       this.printTip();
     }

@@ -8,7 +8,19 @@ interface FileInfo {
     file: string;
     line: number;
     column: number;
+    message: string;
 }
-export declare function traceHttpFile(fileInfo: FileInfo, record: RecordInfo, options: CodeOptions): Promise<void>;
-export declare function traceWebpackFile(fileInfo: FileInfo, record: RecordInfo, options: CodeOptions): Promise<void>;
+export declare function traceHttpFile(fileInfo: FileInfo, record: RecordInfo): Promise<{
+    file: string;
+    line: number | null;
+    column: number | null;
+    message: string;
+}>;
+export declare function traceWebpackFile(fileInfo: FileInfo, record: RecordInfo): Promise<{
+    file: string;
+    line: number;
+    column: number;
+    message: string;
+} | undefined>;
+export declare function transformToSourceStack(req: http.IncomingMessage, res: http.ServerResponse, record: RecordInfo, options: CodeOptions): Promise<void>;
 export {};
