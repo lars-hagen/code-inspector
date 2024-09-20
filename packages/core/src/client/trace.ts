@@ -89,6 +89,7 @@ export function enhanceTrace(ip: string, port: number){
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status === 200) {
             sourceList = JSON.parse(xhr.responseText);
+            console.log(sourceList)
             res(1); 
           } else {
             res(1);
