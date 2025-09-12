@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
   turbopack: {
     rules: codeInspectorPlugin({
       bundler: 'turbopack',
+      turbopackFilePattern: '**/app/**/*.{jsx,tsx,js,ts,mjs,mts}'
     }),
   },
 };
